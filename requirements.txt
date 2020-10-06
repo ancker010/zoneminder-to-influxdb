@@ -1,0 +1,4 @@
+pyzm~=0.1.28
+influxdb~=5.3.0
+apscheduler~=3.6.3
+pytz~=2020.1
