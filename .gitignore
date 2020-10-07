@@ -29,7 +29,8 @@ wheels/
 MANIFEST
 
 # PyCharm
-.idea/
+.idea/*
+.idea
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
