@@ -5,17 +5,17 @@ from influxdb import InfluxDBClient
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 # Load Environmental Variables
-TZ = os.environ.get('TZ', "America/Chicago")
-API = os.environ.get('API', 'https://path.to/zm/api/')
-PORTAL = os.environ.get('PORTAL', 'https://path.to/zm/')
-ZMAPIUSER = os.environ.get('ZMAPIUSER', 'apiuser')
-ZMAPIPASS = os.environ.get('ZMAPIPASS', 'apipass')
+TZ = os.environ.get('TZ')
+API = os.environ.get('API')
+PORTAL = os.environ.get('PORTAL')
+ZMAPIUSER = os.environ.get('ZMAPIUSER')
+ZMAPIPASS = os.environ.get('ZMAPIPASS')
 MINS = os.environ.get('MINS', '1')
-INFLUXHOST = os.environ.get('INFLUXHOST', 'influx-IP')
+INFLUXHOST = os.environ.get('INFLUXHOST', 'localhost')
 INFLUXDB = os.environ.get('INFLUXDB', 'zoneminder')
 INFLUXPORT = os.environ.get('INFLUXPORT', '8086')
-INFLUXUSER = os.environ.get('INFLUXUSER', 'influxuser')
-INFLUXPASS = os.environ.get('INFLUXPASS', 'influxpass')
+INFLUXUSER = os.environ.get('INFLUXUSER')
+INFLUXPASS = os.environ.get('INFLUXPASS')
 
 
 # Set up a Dumb logger to suppress the built-in pyzm logger that's super chatty.
@@ -92,6 +92,12 @@ def grab_events():
         }
 
         es = zmapi.events(event_filter)
+        frames = 0
+        totscore = 0
+        for events in range(0, len(es.list())):
+            frames = es.list()[events].alarmed_frames() + frames
+            totscore = es.list()[events].score()['total'] + totscore
+
 
         json_body = [
             {
@@ -102,7 +108,9 @@ def grab_events():
                 },
                 "time": time,
                 "fields": {
-                    "events": len(es.list())
+                    "events": len(es.list()),
+                    "frames": frames,
+                    "totscore": int(totscore)
                 }
             }
         ]
