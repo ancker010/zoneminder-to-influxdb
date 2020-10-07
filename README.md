@@ -53,3 +53,6 @@ double check your `env.list` and that you followed the directions above.
 *Example InfluxDB Query*
 
 `"SELECT last("events") FROM "monitorEvents" WHERE time >= now() - 6h GROUP BY time(1m), "monitor" fill(null)"`
+
+*Sample Screenshot*
+
