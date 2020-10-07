@@ -11,7 +11,6 @@ API = os.environ.get('API')
 PORTAL = os.environ.get('PORTAL')
 ZMAPIUSER = os.environ.get('ZMAPIUSER')
 ZMAPIPASS = os.environ.get('ZMAPIPASS')
-MINS = os.environ.get('MINS', '1')
 INFLUXHOST = os.environ.get('INFLUXHOST', 'localhost')
 INFLUXDB = os.environ.get('INFLUXDB', 'zoneminder')
 INFLUXPORT = os.environ.get('INFLUXPORT', '8086')
@@ -57,7 +56,7 @@ api_options = {
     # 'disable_ssl_cert_check': True
 }
 
-print("Firing up, stats will be sent to " + INFLUXHOST + ":" + INFLUXPORT + " every " + MINS + " minutes.")
+print("Firing up, stats will be sent to " + INFLUXHOST + ":" + INFLUXPORT + " every 1 minute.")
 
 # Main function.
 def grab_events():
@@ -86,7 +85,8 @@ def grab_events():
     for m in ms.list():
         event_filter = {
             'mid': m.id(),
-            'from': MINS + ' minutes ago',  # this will use localtimezone, use 'tz' for other timezones
+            'from': '10 minutes ago', # this will use localtimezone, use 'tz' for other timezones
+            'to': '9 minutes ago',
             'object_only': False,
             'min_alarmed_frames': 1,
             'max_events': 500,
