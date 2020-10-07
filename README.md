@@ -57,3 +57,7 @@ double check your `env.list` and that you followed the directions above.
 *Sample Screenshot*
 
 [Grafana ScreenShot](https://github.com/ancker010/zoneminder-to-influxdb/blob/master/grafana-screenshot.png)
+
+*TODO*
+- Understand and figure out a way to gather events that are longer than `MINS` or cross over the `MINS` barrier. 
+Currently only events that start AND end between runs are reported. 
