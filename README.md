@@ -5,6 +5,9 @@ The script will pull the number of events per the MINS variable set in `env.list
 It will also count the total `alarmed_frames` and `total score` for these events as that may be more useful than just
 count of events for graphing or visualizing activity.
 
+**Please Note** There is a delay built into the system to report events from 10 minutes ago to ensure that all events
+have ended before their stats are gathered and pushed to InfluxDB.
+
 *Usage:*
 
 - Create an InfluxDB Database named `zoneminder`. Check the InfluxDB Docs for help. Be sure to set up a user account 
@@ -58,6 +61,3 @@ double check your `env.list` and that you followed the directions above.
 
 [Grafana ScreenShot](https://github.com/ancker010/zoneminder-to-influxdb/blob/master/grafana-screenshot.png)
 
-*TODO*
-- Understand and figure out a way to gather events that are longer than `MINS` or cross over the `MINS` barrier. 
-Currently only events that start AND end between runs are reported. 

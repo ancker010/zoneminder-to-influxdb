@@ -1,4 +1,5 @@
 from datetime import datetime
+from datetime import timedelta  
 import pytz
 import os
 from influxdb import InfluxDBClient
@@ -62,7 +63,7 @@ print("Firing up, stats will be sent to " + INFLUXHOST + ":" + INFLUXPORT + " ev
 def grab_events():
     import pyzm.api as zmapi
     # Set the Time
-    timenow = datetime.today()
+    timenow = datetime.today() - timedelta(minutes=10)
     timezone = pytz.timezone(TZ)
     time = timenow.astimezone(timezone).isoformat()
 
