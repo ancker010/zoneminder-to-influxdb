@@ -7,7 +7,7 @@ RUN pip install apscheduler
 RUN pip install pytz
 WORKDIR /app
 
-COPY env.list .
+COPY env.list.example .
 
 COPY . .
 

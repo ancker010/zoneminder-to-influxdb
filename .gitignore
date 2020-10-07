@@ -1,3 +1,6 @@
+# Ignore Docker env.list file
+env.list
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
