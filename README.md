@@ -7,20 +7,22 @@ count of events for graphing or visualizing activity.
 
 *Usage:*
 
-1. Clone
-2. Copy the environmental variable list to a local copy.
+- Clone the repo.
+
+`git clone https://github.com/ancker010/zoneminder-to-influxdb.git`
+- Copy the environmental variable list to a local copy.
 
 `cp env.list.example -> env.list`
-3. Edit env.list with your data
+- Edit env.list with your data
 
 `vi env.list`
-4. Build the container.
+- Build the container.
 
 `docker build --tag zm-to-influx:1.0 .`
-5. Run the container.
+- Run the container.
 
 `docker run -d --env-file ./env.list --name zm-to-influx zm-to-influx:1.0`
-6. Check the logs for proper output.
+- Check the logs for proper output.
 
 `docker logs --follow zm-to-influx`
 
