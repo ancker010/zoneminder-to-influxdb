@@ -27,7 +27,8 @@ with write access to that Database. You'll need it below.
 - Run the container.
 
 `docker run -d --env-file ./env.list --name zm-to-influx zm-to-influx:1.0`
-- Check the logs for proper output.
+- Check the logs for proper output. You shouldn't see anything at all if everything is working. If you see errors,
+double check your `env.list` and that you followed the directions above.
 
 `docker logs --follow zm-to-influx`
 
