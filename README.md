@@ -7,6 +7,11 @@ count of events for graphing or visualizing activity.
 
 *Usage:*
 
+- Create an InfluxDB Database named `zoneminder`. Check the InfluxDB Docs for help. Be sure to set up a user account 
+with write access to that Database. You'll need it below.
+
+- Make sure the Zoneminder API is enabled and an API user exists. "View" Permissions should be enough.
+
 - Clone the repo.
 
 `git clone https://github.com/ancker010/zoneminder-to-influxdb.git`
