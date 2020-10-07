@@ -56,3 +56,4 @@ double check your `env.list` and that you followed the directions above.
 
 *Sample Screenshot*
 
+[Grafana ScreenShot](https://github.com/ancker010/zoneminder-to-influxdb/blob/master/grafana-screenshot.png)
