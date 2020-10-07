@@ -6,7 +6,7 @@ from influxdb import InfluxDBClient
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 # Load Environmental Variables
-TZ = os.environ.get('TZ')
+TZ = os.environ.get('TZ', 'America/Chicago')
 API = os.environ.get('API')
 PORTAL = os.environ.get('PORTAL')
 ZMAPIUSER = os.environ.get('ZMAPIUSER')
@@ -63,8 +63,10 @@ def grab_events():
     import pyzm.api as zmapi
     # Set the Time
     timenow = datetime.today() - timedelta(minutes=10)
+    timeminus9 = datetime.today() - timedelta(minutes=9)
     timezone = pytz.timezone(TZ)
     time = timenow.astimezone(timezone).isoformat()
+    time9 = timeminus9.astimezone(timezone).isoformat()
 
     # Init ZM API
     try:
@@ -82,11 +84,12 @@ def grab_events():
     # Loop through monitors, grab events for the last N minutes.
 
     ms = zmapi.monitors()
+    pushev = []
     for m in ms.list():
+        pushev = []
         event_filter = {
             'mid': m.id(),
-            'from': '10 minutes ago', # this will use localtimezone, use 'tz' for other timezones
-            'to': '9 minutes ago',
+            'from': '10 minutes ago', # Events must start after this... and....
             'object_only': False,
             'min_alarmed_frames': 1,
             'max_events': 500,
@@ -94,11 +97,17 @@ def grab_events():
         }
 
         es = zmapi.events(event_filter)
+        
+        for i in range(0, len(es.list())):
+            ev_start = datetime.strptime(es.list()[i].event['Event']['StartTime'], '%Y-%m-%d %H:%M:%S').isoformat()
+            if ev_start < time9:
+                pushev.append(es.list()[i])
+
         frames = 0
         totscore = 0
-        for events in range(0, len(es.list())):
-            frames = es.list()[events].alarmed_frames() + frames
-            totscore = es.list()[events].score()['total'] + totscore
+        for events in range(0, len(pushev)):
+            frames = pushev[events].alarmed_frames() + frames
+            totscore = pushev[events].score()['total'] + totscore
 
 
         json_body = [
@@ -110,7 +119,7 @@ def grab_events():
                 },
                 "time": time,
                 "fields": {
-                    "events": len(es.list()),
+                    "events": len(pushev),
                     "frames": frames,
                     "totscore": int(totscore)
                 }
