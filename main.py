@@ -56,7 +56,7 @@ api_options = {
     # 'disable_ssl_cert_check': True
 }
 
-print("Firing up, stats will be sent to " + INFLUXHOST + ":" + INFLUXPORT " every " + MINS " minutes.")
+print("Firing up, stats will be sent to " + INFLUXHOST + ":" + INFLUXPORT + " every " + MINS + " minutes.")
 
 # Main function.
 def grab_events():
