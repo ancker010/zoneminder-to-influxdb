@@ -1,6 +1,7 @@
 FROM python:3
 
 RUN pip install pipenv
+RUN apt-get install libgeos-dev
 RUN pip install pyzm
 RUN pip install influxdb
 RUN pip install apscheduler
