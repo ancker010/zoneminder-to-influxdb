@@ -127,7 +127,7 @@ def grab_events():
         ]
         # Write to InfluxDB
         client.write_points(json_body)
-    print(time)
+    print("Stats pushed for " + time)
 
 
 if __name__ == '__main__':
